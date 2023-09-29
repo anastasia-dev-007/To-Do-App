@@ -1,5 +1,8 @@
 import { useState } from 'react';
 import './App.css';
+import TaskInput from './components/TaskInput';
+import Statuses from './components/Statuses';
+import Tasks from './components/Tasks';
 
 function App() {
   const defaultTaskValue = {
@@ -63,59 +66,80 @@ function App() {
 
   return (
     <div>
-      <div>
+      <TaskInput inputValue={inputValue}
+        setInputValue={setInputValue}
+        handleSave={handleSave} />
+
+      {/* <div>
         <input type="text"
           placeholder='Add a new task'
           value={inputValue.name}
           onInput={(event) => setInputValue({
             ...inputValue, name: event.target.value
-          })} />{/*rescriem doar proprietatea name, restul cu rest operator adaugam */}
-        <button onClick={() => { handleSave() }}>Save</button>
-      </div>
-
+          })} />{/*rescriem doar proprietatea name, restul cu rest operator adaugam 
+          
+          <button onClick={() => { handleSave() }}>Save</button>
+      </div> */}
       <div>
-        <ul>
-          <li className={status === null ? 'active' : null} style={{color: status === null ? 'blue' : 'black'}} onClick={() => setStatus(null)}>All</li>
-          <li className={status === false ? 'active' : null} style={{color: status === false ? 'blue' : 'black'}} onClick={() => setStatus(false)}>Pending</li>
-          <li className={status === true ? 'active' : null} style={{color: status === true ? 'blue' : 'black'}} onClick={() => setStatus(true)}>Completed</li>
-        </ul>
+        <Statuses status={status} setStatus={setStatus} />
+        {/* <ul>
+          <li className={status === null ? 'active' : null} style={{ color: status === null ? 'blue' : 'black' }} onClick={() => setStatus(null)}>All</li>
+          <li className={status === false ? 'active' : null} style={{ color: status === false ? 'blue' : 'black' }} onClick={() => setStatus(false)}>Pending</li>
+          <li className={status === true ? 'active' : null} style={{ color: status === true ? 'blue' : 'black' }} onClick={() => setStatus(true)}>Completed</li>
+        </ul> */}
 
         <button onClick={() => handleClearAll()}>Clear All</button>
       </div>
 
-      <div>
+      <Tasks tasks={tasks.filter(task => {
+        if (status === null) {
+          return true;
+        } else if (status === true) {
+          return task.completed === true;
+        } else {
+          return task.completed === false;
+        }
+
+        //OR
+        // return status === null ? true : task.completed === status;
+
+      })
+      }
+        handleCompletedChange={handleCompletedChange}
+        setInputValue={setInputValue}
+        handleRemove={handleRemove} />
+      {/* <div>
         <ul>
-          {
-            tasks.filter(task => {
-              if (status === null) {
-                return true;
-              } else if (status === true) {
-                return task.completed === true;
-              } else {
-                return task.completed === false;
-              }
+          {tasks.filter(task => {
+            if (status === null) {
+              return true;
+            } else if (status === true) {
+              return task.completed === true;
+            } else {
+              return task.completed === false;
+            }
 
-              //OR
+            //OR
 
-              // return status === null ? true : task.completed === status;
+            // return status === null ? true : task.completed === status;
 
-            }).map(task => (//map ne permite sa trecem prin fiecare element al array
-              <li key={task.id}> {/*fiecare li trebuie sa aiba key */}
-                <input type="checkbox"
-                  checked={task.completed}
-                  onChange={(event) => handleCompletedChange(task, event.target.checked)} />
-                  <span style={{ textDecorationLine: task.completed === true ? 'line-through' : 'none' }}>{task.name}</span>
+          }).map(task => (//map ne permite sa trecem prin fiecare element al array
+            <li key={task.id}> {/*fiecare li trebuie sa aiba key */}
+      {/* <input type="checkbox"
+                checked={task.completed}
+                onChange={(event) => handleCompletedChange(task, event.target.checked)} />
+              <span style={{ textDecorationLine: task.completed === true ? 'line-through' : 'none' }}>{task.name}</span> */}
 
-{/* OR */}
-                {/* <span className={task.completed === true && 'completed'}>{task.name}</span> */}
-                <div>
-                  <button disabled={task.completed} onClick={() => setInputValue(task)}>Edit</button>{/*cand vom da click pe Edit vom salva intregul obiect cu props id, completed and name, iar ulterior in input vom edita doar proprietatea name. Cand vom da click pe SAVE vom verifica daca task are id inseamna ca el este unul existent si in acest caz va trebui sa il gasim in lista si sa ii schimbam valoarea, iar daca nu avem id inseamna ca acesta este un obiect nou si va trebui sa ii setam un nou id, completed sa fie false si sa il adaugam in lista (setTasks)*/}
-                  <button onClick={() => handleRemove(task)}>Remove</button>
-                </div>
-              </li>
-            ))}
+      {/* OR */}
+      {/* <span className={task.completed === true && 'completed'}>{task.name}</span> */}
+      {/* <div>
+                <button disabled={task.completed} onClick={() => setInputValue(task)}>Edit</button>{/*cand vom da click pe Edit vom salva intregul obiect cu props id, completed and name, iar ulterior in input vom edita doar proprietatea name. Cand vom da click pe SAVE vom verifica daca task are id inseamna ca el este unul existent si in acest caz va trebui sa il gasim in lista si sa ii schimbam valoarea, iar daca nu avem id inseamna ca acesta este un obiect nou si va trebui sa ii setam un nou id, completed sa fie false si sa il adaugam in lista (setTasks)*/}
+      {/* <button onClick={() => handleRemove(task)}>Remove</button>
+              </div> */}
+      {/* </li>
+          ))}
         </ul>
-      </div>
+      </div> */}
     </div>
 
 

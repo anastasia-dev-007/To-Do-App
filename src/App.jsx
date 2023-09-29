@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import './App.css';
-import TaskInput from './components/TaskInput';
-import Statuses from './components/Statuses';
-import Tasks from './components/Tasks';
+import TaskInput from './components/TaskInput/TaskInput';
+import Statuses from './components/Statuses/Statuses';
+import Tasks from './components/Tasks/Tasks';
 
 function App() {
   const defaultTaskValue = {
@@ -65,7 +64,8 @@ function App() {
   };
 
   return (
-    <div>
+    <div className='mainContainer'>
+      <p style={{fontSize: '25px', textAlign: 'center', margin: '20px' }}><b>TO DO APP</b></p>
       <TaskInput inputValue={inputValue}
         setInputValue={setInputValue}
         handleSave={handleSave} />
@@ -80,7 +80,7 @@ function App() {
           
           <button onClick={() => { handleSave() }}>Save</button>
       </div> */}
-      <div>
+      <div className='filter'>
         <Statuses status={status} setStatus={setStatus} />
         {/* <ul>
           <li className={status === null ? 'active' : null} style={{ color: status === null ? 'blue' : 'black' }} onClick={() => setStatus(null)}>All</li>
@@ -88,8 +88,10 @@ function App() {
           <li className={status === true ? 'active' : null} style={{ color: status === true ? 'blue' : 'black' }} onClick={() => setStatus(true)}>Completed</li>
         </ul> */}
 
-        <button onClick={() => handleClearAll()}>Clear All</button>
+        <button className='btn' onClick={() => handleClearAll()}>Clear All</button>
       </div>
+
+      <hr/>
 
       <Tasks tasks={tasks.filter(task => {
         if (status === null) {
@@ -140,6 +142,7 @@ function App() {
           ))}
         </ul>
       </div> */}
+       
     </div>
 
 

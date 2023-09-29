@@ -1,0 +1,20 @@
+.inputContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn{
+    background-color: #0099ff;
+    color: white;
+    border: none;
+    padding: 8px 10px;
+    border-radius: 5px;
+    width: 90px;
+}
+
+.inputBar {
+    padding: 5px;
+    width: 75%;
+    border-radius: 5px;
+    border-color: rgba(0, 0, 0, 0.371);
+}
